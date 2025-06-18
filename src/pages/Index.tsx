@@ -1,3 +1,4 @@
+
 import React, { useState, useCallback, useEffect } from 'react';
 import CircularTimer from '../components/CircularTimer';
 import PastaCard from '../components/PastaCard';
@@ -11,57 +12,50 @@ interface PastaType {
   description: string;
   story: string;
   location: string;
-  icon: string;
 }
 
 const pastaTypes: PastaType[] = [
   {
-    name: 'Spaghetti alla Carbonara',
+    name: 'spaghetti',
     time: 600, // 10 minutes
-    description: 'Cremosa e avvolgente, come un abbraccio romano.',
-    story: 'Nonna Maria\'s secret: never let the eggs scramble, whisper to them gently...',
-    location: 'Roma, Lazio',
-    icon: '🍝'
+    description: 'creamy and enveloping, like a warm roman embrace.',
+    story: 'nonna maria\'s secret: never let the eggs scramble, whisper to them gently...',
+    location: 'rome, italy'
   },
   {
-    name: 'Penne all\'Arrabbiata',
+    name: 'penne',
     time: 660, // 11 minutes
-    description: 'Piccante come il carattere siciliano, dolce come il tramonto.',
-    story: 'From Giuseppe\'s kitchen in Palermo, where passion meets perfection...',
-    location: 'Palermo, Sicilia',
-    icon: '🌶️'
+    description: 'spicy like the sicilian character, sweet like the sunset.',
+    story: 'from giuseppe\'s kitchen in palermo, where passion meets perfection...',
+    location: 'palermo, italy'
   },
   {
-    name: 'Fettuccine Alfredo',
+    name: 'fettuccine',
     time: 480, // 8 minutes
-    description: 'Setosa come la seta, ricca come l\'amore di famiglia.',
-    story: 'Made famous in a small Roman trattoria, where dreams are born...',
-    location: 'Roma, Lazio',
-    icon: '🧈'
+    description: 'silky like silk, rich like family love.',
+    story: 'made famous in a small roman trattoria, where dreams are born...',
+    location: 'rome, italy'
   },
   {
-    name: 'Rigatoni alla Norma',
+    name: 'rigatoni',
     time: 720, // 12 minutes
-    description: 'Un tributo all\'Etna, con melanzane e ricotta salata.',
-    story: 'Born in Catania\'s shadow of Etna, where volcanic soil feeds the soul...',
-    location: 'Catania, Sicilia',
-    icon: '🍆'
+    description: 'a tribute to etna, with eggplant and aged ricotta.',
+    story: 'born in catania\'s shadow of etna, where volcanic soil feeds the soul...',
+    location: 'catania, italy'
   },
   {
-    name: 'Linguine alle Vongole',
+    name: 'linguine',
     time: 540, // 9 minutes
-    description: 'Il sapore del mare della costiera, sussurri di onde salate.',
-    story: 'Fishermen\'s wives in Amalfi, cooking with the catch of the day...',
-    location: 'Amalfi, Campania',
-    icon: '🐚'
+    description: 'the taste of the amalfi sea, whispers of salty waves.',
+    story: 'fishermen\'s wives in amalfi, cooking with the catch of the day...',
+    location: 'amalfi, italy'
   },
   {
-    name: 'Ravioli di Ricotta',
+    name: 'ravioli',
     time: 240, // 4 minutes
-    description: 'Delicati cuscini di pasta, ripieni di tradizione siciliana.',
-    story: 'Sunday mornings in nonna\'s kitchen, where hands speak love...',
-    location: 'Taormina, Sicilia',
-    icon: '🥟'
+    description: 'delicate pasta pillows, filled with sicilian tradition.',
+    story: 'sunday mornings in nonna\'s kitchen, where hands speak love...',
+    location: 'taormina, italy'
   }
 ];
 
@@ -119,7 +113,7 @@ const Index = () => {
   const handleTimerComplete = useCallback(() => {
     setIsRunning(false);
     setIsTimerComplete(true);
-    console.log('Perfetto! Your pasta is ready!');
+    console.log('perfect! your pasta is ready!');
   }, []);
 
   return (
@@ -132,13 +126,12 @@ const Index = () => {
           <div className="flex items-center justify-center mb-6">
             <Heart className="text-terracotta-warm mr-4 animate-story-shimmer" size={32} />
             <h1 className="text-6xl font-bold bg-gradient-to-r from-lemon-sun via-terracotta-warm to-mediterranean-blue bg-clip-text text-transparent font-serif">
-              Limoncello
+              limoncello
             </h1>
             <ChefHat className="text-olive-grove ml-4 animate-gentle-sway" size={32} />
           </div>
           <p className="text-xl text-volcanic-stone opacity-90 max-w-2xl mx-auto font-serif italic leading-relaxed">
-            Dove ogni pasta racconta una storia... <br />
-            <span className="text-lg text-terracotta-warm">Where every pasta tells a story</span>
+            where every pasta tells a story...
           </p>
         </div>
 
@@ -176,7 +169,7 @@ const Index = () => {
 
               {isTimerComplete && (
                 <div className="mt-8 bg-gradient-to-r from-lemon-sun to-terracotta-warm text-white px-8 py-4 rounded-full animate-story-shimmer shadow-2xl">
-                  <span className="font-bold font-serif text-lg">🍝 Perfetto! La pasta è pronta! 🍝</span>
+                  <span className="font-bold font-serif text-lg">perfect! your pasta is ready!</span>
                 </div>
               )}
             </div>
@@ -184,9 +177,7 @@ const Index = () => {
             {/* Recipe cards - like flipping through nonna's cookbook */}
             <div className="space-y-6">
               <h3 className="text-2xl font-bold text-volcanic-stone text-center mb-8 font-serif">
-                Storie di Famiglia
-                <br />
-                <span className="text-lg text-terracotta-warm font-normal italic">Family Stories</span>
+                family stories
               </h3>
               <div className="grid grid-cols-2 gap-6">
                 {pastaTypes.map((pasta, index) => (
@@ -201,8 +192,7 @@ const Index = () => {
               </div>
               
               <div className="text-center text-sm text-volcanic-stone/60 mt-6 font-serif italic">
-                Usa le frecce ← → per sfogliare le ricette <br />
-                <span className="text-xs">Use arrow keys to browse recipes</span>
+                use arrow keys to browse recipes
               </div>
             </div>
           </div>
@@ -216,10 +206,7 @@ const Index = () => {
             <div className="h-px bg-gradient-to-r from-transparent via-volcanic-stone/30 to-transparent w-32"></div>
           </div>
           <p className="text-lg text-volcanic-stone font-serif italic leading-relaxed">
-            Inspired by moments shared from Mount Etna to Amalfi
-          </p>
-          <p className="text-sm text-volcanic-stone/70 mt-2 font-serif">
-            Ispirato dai momenti condivisi dall'Etna alla Costiera Amalfitana
+            inspired by moments shared from mount etna to amalfi
           </p>
         </div>
       </div>

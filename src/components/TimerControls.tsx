@@ -29,12 +29,12 @@ const TimerControls: React.FC<TimerControlsProps> = ({
         {isRunning ? (
           <>
             <Pause size={24} />
-            <span>Pausa</span>
+            <span>pause</span>
           </>
         ) : (
           <>
             <Play size={24} />
-            <span>Inizia</span>
+            <span>start</span>
           </>
         )}
       </button>
@@ -49,7 +49,7 @@ const TimerControls: React.FC<TimerControlsProps> = ({
                    border-2 border-white/20 backdrop-blur-sm"
       >
         <RotateCcw size={20} />
-        <span>Ricomincia</span>
+        <span>reset</span>
       </button>
     </div>
   );

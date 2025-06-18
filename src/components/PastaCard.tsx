@@ -1,5 +1,6 @@
 
 import React from 'react';
+import HandDrawnPastaIcon from './HandDrawnPastaIcon';
 
 interface PastaType {
   name: string;
@@ -7,7 +8,6 @@ interface PastaType {
   description: string;
   story: string;
   location: string;
-  icon: string;
 }
 
 interface PastaCardProps {
@@ -38,8 +38,8 @@ const PastaCard: React.FC<PastaCardProps> = ({ pasta, isSelected, onClick, isFli
         {/* Card header with pasta icon and location */}
         <div className="flex items-start justify-between mb-4 relative z-10">
           <div className="flex items-center space-x-3">
-            <div className="text-4xl animate-mediterranean-breeze" style={{ animationDelay: '0.5s' }}>
-              {pasta.icon}
+            <div className="animate-mediterranean-breeze" style={{ animationDelay: '0.5s' }}>
+              <HandDrawnPastaIcon pastaType={pasta.name} />
             </div>
             <div>
               <div className="text-xs text-volcanic-stone/60 font-medium uppercase tracking-wide">
@@ -51,13 +51,21 @@ const PastaCard: React.FC<PastaCardProps> = ({ pasta, isSelected, onClick, isFli
             </div>
           </div>
           
-          {/* Decorative lemon accent */}
+          {/* Hand-drawn lemon accent */}
           <div className="animate-gentle-sway">
             <svg width="20" height="20" viewBox="0 0 24 24" className="text-lemon-sun opacity-70">
-              <ellipse cx="12" cy="12" rx="4" ry="6" fill="currentColor" />
               <path
-                d="M12 8c-1 0-1.5 0.5-1.5 1s0.5 1 1.5 1 1.5-0.5 1.5-1-0.5-1-1.5-1z"
-                fill="#F1C40F"
+                d="M12 4c-2 0-3.5 1.5-4 4-.5 3 0 6 1 8.5 1 2.5 2.5 3.5 3 3.5s2-1 3-3.5c1-2.5 1.5-5.5 1-8.5-.5-2.5-2-4-4-4z"
+                fill="currentColor"
+                stroke="currentColor"
+                strokeWidth="0.5"
+                style={{
+                  filter: 'drop-shadow(0 0 2px rgba(241, 196, 15, 0.3))'
+                }}
+              />
+              <path
+                d="M12 6c-.5 0-1 .5-1 1s.5 1 1 1 1-.5 1-1-.5-1-1-1z"
+                fill="#F7DC6F"
                 opacity="0.8"
               />
             </svg>
@@ -79,17 +87,29 @@ const PastaCard: React.FC<PastaCardProps> = ({ pasta, isSelected, onClick, isFli
           {pasta.description}
         </p>
 
-        {/* Decorative Mediterranean elements */}
+        {/* Hand-drawn decorative elements */}
         <div className="absolute bottom-3 right-3 flex space-x-2 opacity-40">
           <svg width="12" height="12" viewBox="0 0 24 24" className="text-olive-grove animate-gentle-sway">
             <path
-              d="M12 2c2 0 4 1 4 3v4c0 2-2 3-4 3s-4-1-4-3V5c0-2 2-3 4-3z"
+              d="M12 2c1.5 0 3 .5 3.5 2v6c0 1.5-1.5 2.5-3.5 2.5s-3.5-1-3.5-2.5V4c.5-1.5 2-2 3.5-2z"
               fill="currentColor"
+              stroke="currentColor"
+              strokeWidth="0.3"
             />
+            <ellipse cx="12" cy="6" rx="1.5" ry="1" fill="currentColor" opacity="0.6" />
           </svg>
           <svg width="12" height="12" viewBox="0 0 24 24" className="text-amalfi-blue animate-mediterranean-breeze">
-            <circle cx="12" cy="12" r="6" fill="currentColor" opacity="0.6" />
-            <circle cx="12" cy="12" r="3" fill="currentColor" opacity="0.8" />
+            <circle 
+              cx="12" 
+              cy="12" 
+              r="5" 
+              fill="none" 
+              stroke="currentColor" 
+              strokeWidth="1" 
+              opacity="0.6"
+              strokeDasharray="2,1"
+            />
+            <circle cx="12" cy="12" r="2" fill="currentColor" opacity="0.8" />
           </svg>
         </div>
 
