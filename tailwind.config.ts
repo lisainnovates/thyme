@@ -1,3 +1,4 @@
+
 import type { Config } from "tailwindcss";
 
 export default {
@@ -52,16 +53,13 @@ export default {
 					DEFAULT: 'hsl(var(--card))',
 					foreground: 'hsl(var(--card-foreground))'
 				},
-				sidebar: {
-					DEFAULT: 'hsl(var(--sidebar-background))',
-					foreground: 'hsl(var(--sidebar-foreground))',
-					primary: 'hsl(var(--sidebar-primary))',
-					'primary-foreground': 'hsl(var(--sidebar-primary-foreground))',
-					accent: 'hsl(var(--sidebar-accent))',
-					'accent-foreground': 'hsl(var(--sidebar-accent-foreground))',
-					border: 'hsl(var(--sidebar-border))',
-					ring: 'hsl(var(--sidebar-ring))'
-				}
+				// Limoncello palette
+				'lemon-yellow': '#F7DC6F',
+				'lemon-green': '#BFD8B8',
+				'terracotta': '#D65A31',
+				'lava-orange': '#E25822',
+				'volcanic-gray': '#5A5A5A',
+				'creamy-white': '#FFF8E7'
 			},
 			borderRadius: {
 				lg: 'var(--radius)',
@@ -84,11 +82,32 @@ export default {
 					to: {
 						height: '0'
 					}
+				},
+				'sway': {
+					'0%, 100%': { transform: 'rotate(-2deg)' },
+					'50%': { transform: 'rotate(2deg)' }
+				},
+				'float': {
+					'0%, 100%': { transform: 'translateY(0px)' },
+					'50%': { transform: 'translateY(-6px)' }
+				},
+				'page-flip': {
+					'0%': { transform: 'rotateY(0deg)' },
+					'50%': { transform: 'rotateY(90deg)' },
+					'100%': { transform: 'rotateY(0deg)' }
+				},
+				'timer-fill': {
+					'0%': { 'stroke-dashoffset': '0' },
+					'100%': { 'stroke-dashoffset': '440' }
 				}
 			},
 			animation: {
 				'accordion-down': 'accordion-down 0.2s ease-out',
-				'accordion-up': 'accordion-up 0.2s ease-out'
+				'accordion-up': 'accordion-up 0.2s ease-out',
+				'sway': 'sway 3s ease-in-out infinite',
+				'float': 'float 2s ease-in-out infinite',
+				'page-flip': 'page-flip 0.6s ease-in-out',
+				'timer-fill': 'timer-fill linear'
 			}
 		}
 	},
