@@ -52,18 +52,18 @@ export default {
 					DEFAULT: 'hsl(var(--card))',
 					foreground: 'hsl(var(--card-foreground))'
 				},
-				// Mediterranean Limoncello palette
-				'mediterranean-blue': '#3498DB',
-				'amalfi-blue': '#5DADE2',
-				'olive-grove': '#8FBC8F',
-				'sicilian-olive': '#6B8E23',
-				'lemon-sun': '#F1C40F',
-				'coastal-yellow': '#F7DC6F',
-				'terracotta-warm': '#E67E22',
-				'etna-terracotta': '#D35400',
-				'volcanic-stone': '#34495E',
-				'mediterranean-cream': '#F8F4E6',
-				'sea-mist': '#E8F4F8',
+				// Coastal fishing village palette
+				'mediterranean-blue': '#2C5F7C',
+				'amalfi-blue': '#4A90A4',
+				'olive-grove': '#6B7B3F',
+				'sicilian-olive': '#4F5D2F',
+				'lemon-sun': '#E6B800',
+				'coastal-yellow': '#F2D974',
+				'terracotta-warm': '#B8860B',
+				'etna-terracotta': '#A0752B',
+				'volcanic-stone': '#2C3E50',
+				'mediterranean-cream': '#F5F5DC',
+				'sea-mist': '#E0F2F1',
 				'lemon-grove': '#F0F8E8'
 			},
 			borderRadius: {
