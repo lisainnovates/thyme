@@ -1,3 +1,4 @@
+
 import React, { useState, useCallback, useEffect } from 'react';
 import CircularTimer from '../components/CircularTimer';
 import RecipeBook from '../components/RecipeBook';
@@ -56,6 +57,62 @@ const pastaTypes: PastaType[] = [
     description: 'delicate pasta pillows, filled with sicilian tradition.',
     story: 'sunday mornings in cozy kitchens, where hands speak love...',
     location: 'bergamo'
+  },
+  {
+    name: 'fusilli',
+    time: 600, // 10 minutes
+    description: 'twisted like the mountain paths of campania.',
+    story: 'shaped by wooden tools in ancient hill towns...',
+    location: 'gragnano'
+  },
+  {
+    name: 'tagliatelle',
+    time: 420, // 7 minutes
+    description: 'golden ribbons from emilia\'s fertile plains.',
+    story: 'cut by hand in bologna\'s morning light...',
+    location: 'bologna'
+  },
+  {
+    name: 'farfalle',
+    time: 660, // 11 minutes
+    description: 'butterfly wings dancing in summer herbs.',
+    story: 'pinched with care in lombardy\'s quiet valleys...',
+    location: 'lombardy'
+  },
+  {
+    name: 'orecchiette',
+    time: 780, // 13 minutes
+    description: 'little ears that catch the essence of puglia.',
+    story: 'shaped on marble tables in bari\'s old quarter...',
+    location: 'bari'
+  },
+  {
+    name: 'tortellini',
+    time: 180, // 3 minutes
+    description: 'tiny parcels of modena\'s gentle tradition.',
+    story: 'folded like secrets in emilian kitchens...',
+    location: 'modena'
+  },
+  {
+    name: 'gnocchi',
+    time: 120, // 2 minutes
+    description: 'pillowy clouds from alpine potato fields.',
+    story: 'rolled by generations in mountain villages...',
+    location: 'trentino'
+  },
+  {
+    name: 'paccheri',
+    time: 840, // 14 minutes
+    description: 'wide tubes that embrace neapolitan sun.',
+    story: 'born from the need to hold precious sauces...',
+    location: 'naples'
+  },
+  {
+    name: 'cacio e pepe',
+    time: 360, // 6 minutes (tonnarelli)
+    description: 'roman simplicity in three ingredients.',
+    story: 'perfected in trattorie near the pantheon...',
+    location: 'rome'
   }
 ];
 
