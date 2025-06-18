@@ -1,4 +1,3 @@
-
 import React, { useState, useCallback, useEffect } from 'react';
 import CircularTimer from '../components/CircularTimer';
 import RecipeBook from '../components/RecipeBook';
@@ -20,43 +19,43 @@ const pastaTypes: PastaType[] = [
     name: 'spaghetti',
     time: 600, // 10 minutes
     description: 'creamy and enveloping, like a warm roman embrace.',
-    story: 'nonna maria\'s secret: never let the eggs scramble, whisper to them gently...',
-    location: 'naples, italy'
+    story: 'a secret recipe where eggs are whispered to gently, never rushed...',
+    location: 'naples'
   },
   {
     name: 'penne',
     time: 660, // 11 minutes
     description: 'spicy like the sicilian character, sweet like the sunset.',
     story: 'from giuseppe\'s kitchen in palermo, where passion meets perfection...',
-    location: 'liguria, italy'
+    location: 'palermo'
   },
   {
     name: 'fettuccine',
     time: 480, // 8 minutes
     description: 'silky like silk, rich like family love.',
     story: 'made famous in a small roman trattoria, where dreams are born...',
-    location: 'rome, italy'
+    location: 'rome'
   },
   {
     name: 'rigatoni',
     time: 720, // 12 minutes
     description: 'a tribute to etna, with eggplant and aged ricotta.',
     story: 'born in catania\'s shadow of etna, where volcanic soil feeds the soul...',
-    location: 'lazio, italy'
+    location: 'catania'
   },
   {
     name: 'linguine',
     time: 540, // 9 minutes
     description: 'the taste of the amalfi sea, whispers of salty waves.',
-    story: 'fishermen\'s wives in amalfi, cooking with the catch of the day...',
-    location: 'liguria, italy'
+    story: 'inspired by fishermen in amalfi, cooking with the catch of the day...',
+    location: 'amalfi'
   },
   {
     name: 'ravioli',
     time: 240, // 4 minutes
     description: 'delicate pasta pillows, filled with sicilian tradition.',
-    story: 'sunday mornings in nonna\'s kitchen, where hands speak love...',
-    location: 'lombardy, italy'
+    story: 'sunday mornings in cozy kitchens, where hands speak love...',
+    location: 'bergamo'
   }
 ];
 
@@ -148,12 +147,12 @@ const Index = () => {
         <div className="text-center mb-16">
           <div className="flex items-center justify-center mb-6">
             <Heart className="text-terracotta-warm mr-4 animate-story-shimmer" size={32} />
-            <h1 className="text-6xl font-bold bg-gradient-to-r from-lemon-sun via-terracotta-warm to-mediterranean-blue bg-clip-text text-transparent font-serif">
+            <h1 className="text-6xl font-bold bg-gradient-to-r from-lemon-sun via-terracotta-warm to-mediterranean-blue bg-clip-text text-transparent font-dancing">
               limoncello
             </h1>
             <ChefHat className="text-olive-grove ml-4 animate-gentle-sway" size={32} />
           </div>
-          <p className="text-xl text-volcanic-stone opacity-90 max-w-2xl mx-auto font-serif italic leading-relaxed">
+          <p className="text-xl text-volcanic-stone opacity-90 max-w-2xl mx-auto font-dancing leading-relaxed">
             where every pasta tells a story...
           </p>
         </div>
@@ -164,13 +163,13 @@ const Index = () => {
             {/* Timer section */}
             <div className="flex flex-col items-center">
               <div className="mb-8 text-center">
-                <h2 className="text-3xl font-bold text-volcanic-stone mb-3 font-serif">
+                <h2 className="text-3xl font-bold text-volcanic-stone mb-3 font-dancing">
                   {selectedPasta.name}
                 </h2>
                 <p className="text-sm text-volcanic-stone/70 uppercase tracking-wide font-medium mb-2">
                   {selectedPasta.location}
                 </p>
-                <p className="text-base text-volcanic-stone opacity-80 max-w-md mx-auto font-serif italic leading-relaxed">
+                <p className="text-base text-volcanic-stone opacity-80 max-w-md mx-auto font-playfair italic leading-relaxed">
                   {selectedPasta.description}
                 </p>
               </div>
@@ -200,7 +199,7 @@ const Index = () => {
 
               {isTimerComplete && (
                 <div className="mt-8 bg-gradient-to-r from-lemon-sun to-terracotta-warm text-white px-8 py-4 rounded-full animate-story-shimmer shadow-2xl">
-                  <span className="font-bold font-serif text-lg">perfect! your pasta is ready!</span>
+                  <span className="font-bold font-dancing text-lg">perfect! your pasta is ready!</span>
                 </div>
               )}
             </div>
@@ -225,7 +224,7 @@ const Index = () => {
             <Heart className="text-terracotta-warm mx-4 animate-story-shimmer" size={20} />
             <div className="h-px bg-gradient-to-r from-transparent via-volcanic-stone/30 to-transparent w-32"></div>
           </div>
-          <p className="text-lg text-volcanic-stone font-serif italic leading-relaxed">
+          <p className="text-lg text-volcanic-stone font-dancing leading-relaxed">
             inspired by moments shared from mount etna to amalfi
           </p>
         </div>

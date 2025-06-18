@@ -45,7 +45,7 @@ const PastaCard: React.FC<PastaCardProps> = ({ pasta, isSelected, onClick, isFli
               <div className="text-xs text-volcanic-stone/60 font-medium uppercase tracking-wide">
                 {pasta.location}
               </div>
-              <div className="text-sm text-terracotta-warm opacity-80 font-serif italic">
+              <div className="text-sm text-terracotta-warm opacity-80 font-playfair italic">
                 {Math.floor(pasta.time / 60)}:{(pasta.time % 60).toString().padStart(2, '0')} min
               </div>
             </div>
@@ -73,12 +73,12 @@ const PastaCard: React.FC<PastaCardProps> = ({ pasta, isSelected, onClick, isFli
         </div>
 
         {/* Pasta name */}
-        <h3 className="text-xl font-bold text-volcanic-stone mb-3 font-serif relative z-10">
+        <h3 className="text-xl font-bold text-volcanic-stone mb-3 font-dancing relative z-10">
           {pasta.name}
         </h3>
         
         {/* Story excerpt */}
-        <p className="text-sm text-volcanic-stone/80 leading-relaxed mb-3 font-serif italic relative z-10">
+        <p className="text-sm text-volcanic-stone/80 leading-relaxed mb-3 font-playfair italic relative z-10">
           "{pasta.story}"
         </p>
 

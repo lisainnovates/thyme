@@ -1,3 +1,4 @@
+
 import type { Config } from "tailwindcss";
 
 export default {
@@ -65,6 +66,11 @@ export default {
 				'mediterranean-cream': '#F5F5DC',
 				'sea-mist': '#E0F2F1',
 				'lemon-grove': '#F0F8E8'
+			},
+			fontFamily: {
+				'dancing': ['Dancing Script', 'cursive'],
+				'playfair': ['Playfair Display', 'serif'],
+				'serif': ['Playfair Display', 'serif'],
 			},
 			borderRadius: {
 				lg: 'var(--radius)',

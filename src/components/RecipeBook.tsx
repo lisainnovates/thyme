@@ -99,7 +99,7 @@ const RecipeBook: React.FC<RecipeBookProps> = ({
 
       {/* Book title and page indicator */}
       <div className="text-center mt-6">
-        <h3 className="text-lg font-bold text-volcanic-stone font-serif mb-2">
+        <h3 className="text-lg font-bold text-volcanic-stone font-dancing mb-2">
           the pasta collection
         </h3>
         <div className="flex items-center justify-center space-x-2">
@@ -114,10 +114,10 @@ const RecipeBook: React.FC<RecipeBookProps> = ({
             />
           ))}
         </div>
-        <div className="text-sm text-volcanic-stone/60 mt-2 font-serif italic">
+        <div className="text-sm text-volcanic-stone/60 mt-2 font-playfair italic">
           page {currentIndex + 1} of {pastaTypes.length}
         </div>
-        <div className="text-xs text-volcanic-stone/50 mt-2 font-serif italic">
+        <div className="text-xs text-volcanic-stone/50 mt-2 font-playfair italic">
           use arrow keys to flip pages
         </div>
       </div>
