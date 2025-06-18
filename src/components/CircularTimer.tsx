@@ -1,4 +1,3 @@
-
 import React, { useEffect, useRef } from 'react';
 
 interface CircularTimerProps {
@@ -18,12 +17,38 @@ const CircularTimer: React.FC<CircularTimerProps> = ({
 }) => {
   const intervalRef = useRef<NodeJS.Timeout | null>(null);
   
+  // Create audio context and play completion sound
+  const playCompletionSound = () => {
+    try {
+      const audioContext = new (window.AudioContext || (window as any).webkitAudioContext)();
+      const oscillator = audioContext.createOscillator();
+      const gainNode = audioContext.createGain();
+      
+      oscillator.connect(gainNode);
+      gainNode.connect(audioContext.destination);
+      
+      // Create a pleasant bell-like sound
+      oscillator.frequency.setValueAtTime(880, audioContext.currentTime); // A5 note
+      oscillator.frequency.setValueAtTime(1108, audioContext.currentTime + 0.1); // C#6 note
+      oscillator.frequency.setValueAtTime(1320, audioContext.currentTime + 0.2); // E6 note
+      
+      gainNode.gain.setValueAtTime(0.3, audioContext.currentTime);
+      gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 1);
+      
+      oscillator.start(audioContext.currentTime);
+      oscillator.stop(audioContext.currentTime + 1);
+    } catch (error) {
+      console.log('Audio not supported or blocked by browser');
+    }
+  };
+  
   useEffect(() => {
     if (isRunning && currentTime > 0) {
       intervalRef.current = setInterval(() => {
         setCurrentTime(currentTime - 1);
       }, 1000);
     } else if (currentTime === 0 && isRunning) {
+      playCompletionSound();
       onComplete();
     } else {
       if (intervalRef.current) {
