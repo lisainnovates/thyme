@@ -26,7 +26,7 @@ const pastaTypes: PastaType[] = [
     name: 'penne',
     time: 660, // 11 minutes
     description: 'spicy like the sicilian character, sweet like the sunset.',
-    story: 'from giuseppe\'s kitchen in palermo, where passion meets perfection...',
+    story: 'crafted where the sea meets the stove',
     location: 'palermo'
   },
   {
