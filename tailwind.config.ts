@@ -107,6 +107,13 @@ export default {
 					'0%, 100%': { opacity: '0.6', transform: 'scale(1)' },
 					'50%': { opacity: '1', transform: 'scale(1.05)' }
 				},
+				'cookbook-flip': {
+					'0%': { transform: 'rotateY(0deg) scale(1)' },
+					'25%': { transform: 'rotateY(45deg) scale(0.95)' },
+					'50%': { transform: 'rotateY(90deg) scale(0.9)' },
+					'75%': { transform: 'rotateY(135deg) scale(0.95)' },
+					'100%': { transform: 'rotateY(180deg) scale(1)' }
+				},
 				'timer-fill': {
 					'0%': { 'stroke-dashoffset': '0' },
 					'100%': { 'stroke-dashoffset': '440' }
@@ -118,6 +125,7 @@ export default {
 				'gentle-sway': 'gentle-sway 4s ease-in-out infinite',
 				'mediterranean-breeze': 'mediterranean-breeze 6s ease-in-out infinite',
 				'story-shimmer': 'story-shimmer 3s ease-in-out infinite',
+				'cookbook-flip': 'cookbook-flip 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94)',
 				'timer-fill': 'timer-fill linear'
 			}
 		}

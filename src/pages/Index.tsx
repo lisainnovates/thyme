@@ -1,10 +1,10 @@
-
-import React, { useState, useEffect } from 'react';
+import React, { useState, useCallback, useEffect } from 'react';
 import CircularTimer from '../components/CircularTimer';
-import TimerControls from '../components/TimerControls';
 import RecipeBook from '../components/RecipeBook';
+import TimerControls from '../components/TimerControls';
 import DecorationElements from '../components/DecorationElements';
 import CustomTimeInput from '../components/CustomTimeInput';
+import { ChefHat, Heart } from 'lucide-react';
 
 interface PastaType {
   name: string;
@@ -16,88 +16,109 @@ interface PastaType {
 
 const pastaTypes: PastaType[] = [
   {
-    name: "Spaghetti al Pomodoro",
-    time: 8 * 60, // 8 minutes in seconds
-    description: "Simple pasta with fresh tomatoes, basil, and olive oil - a staple of Italian kitchens for generations.",
-    story: "In every Italian kitchen, this dish marks the rhythm of daily life - simple ingredients transformed by time-worn techniques.",
-    location: "Naples"
+    name: 'spaghetti',
+    time: 600, // 10 minutes
+    description: 'creamy and enveloping, like a warm roman embrace.',
+    story: 'a secret recipe where eggs are whispered to gently, never rushed...',
+    location: 'naples'
   },
   {
-    name: "Penne Arrabbiata", 
-    time: 10 * 60,
-    description: "Bold pasta with spicy tomato sauce, garlic, and red pepper flakes that awakens the senses.",
-    story: "Born in the busy kitchens of Rome, where cooks needed quick, flavorful meals during long service hours.",
-    location: "Rome"
+    name: 'penne',
+    time: 660, // 11 minutes
+    description: 'spicy like the sicilian character, sweet like the sunset.',
+    story: 'from giuseppe\'s kitchen in palermo, where passion meets perfection...',
+    location: 'palermo'
   },
   {
-    name: "Fettuccine Alfredo",
-    time: 12 * 60,
-    description: "Rich, creamy pasta with butter and Parmigiano-Reggiano cheese - comfort in its purest form.",
-    story: "Created for quiet family dinners, where the gentle stirring of cream and cheese brings the table together.",
-    location: "Rome"
+    name: 'fettuccine',
+    time: 480, // 8 minutes
+    description: 'silky like silk, rich like family love.',
+    story: 'made famous in a small roman trattoria, where dreams are born...',
+    location: 'rome'
   },
   {
-    name: "Linguine alle Vongole",
-    time: 15 * 60,
-    description: "Delicate pasta with fresh clams, white wine, and parsley - the taste of coastal mornings.",
-    story: "Fishermen's wives prepare this at dawn, using the day's catch while the seaside breeze carries salt through open windows.",
-    location: "Amalfi Coast"
+    name: 'rigatoni',
+    time: 720, // 12 minutes
+    description: 'a tribute to etna, with eggplant and aged ricotta.',
+    story: 'born in catania\'s shadow of etna, where volcanic soil feeds the soul...',
+    location: 'catania'
   },
   {
-    name: "Carbonara",
-    time: 6 * 60,
-    description: "Silky pasta with eggs, pecorino, and guanciale - Roman tradition at its most essential.",
-    story: "In the quiet hours before dawn, this dish sustained workers heading to the markets, simple yet deeply nourishing.",
-    location: "Rome"
+    name: 'linguine',
+    time: 540, // 9 minutes
+    description: 'the taste of the amalfi sea, whispers of salty waves.',
+    story: 'inspired by fishermen in amalfi, cooking with the catch of the day...',
+    location: 'amalfi'
   },
   {
-    name: "Aglio e Olio",
-    time: 5 * 60,
-    description: "Minimalist pasta with garlic, olive oil, and chili - midnight comfort food of Italian souls.",
-    story: "Late-night ritual of tired cooks, when only the essential flavors of garlic and good oil can satisfy.",
-    location: "Southern Italy"
+    name: 'ravioli',
+    time: 240, // 4 minutes
+    description: 'delicate pasta pillows, filled with sicilian tradition.',
+    story: 'sunday mornings in cozy kitchens, where hands speak love...',
+    location: 'bergamo'
   }
 ];
 
 const Index = () => {
   const [selectedPasta, setSelectedPasta] = useState<PastaType>(pastaTypes[0]);
-  const [timeRemaining, setTimeRemaining] = useState<number>(selectedPasta.time);
+  const [currentTime, setCurrentTime] = useState<number>(pastaTypes[0].time);
   const [isRunning, setIsRunning] = useState<boolean>(false);
-  const [customTime, setCustomTime] = useState<number>(selectedPasta.time);
   const [flippingIndex, setFlippingIndex] = useState<number | null>(null);
+  const [isTimerComplete, setIsTimerComplete] = useState<boolean>(false);
+  const [customTime, setCustomTime] = useState<number | null>(null);
 
+  // Handle keyboard navigation
   useEffect(() => {
-    let interval: NodeJS.Timeout;
-    
-    if (isRunning && timeRemaining > 0) {
-      interval = setInterval(() => {
-        setTimeRemaining((prev) => {
-          if (prev <= 1) {
-            setIsRunning(false);
-            return 0;
-          }
-          return prev - 1;
-        });
-      }, 1000);
-    }
+    const handleKeyPress = (event: KeyboardEvent) => {
+      if (event.key === 'ArrowLeft' || event.key === 'ArrowRight') {
+        const currentIndex = pastaTypes.findIndex(p => p.name === selectedPasta.name);
+        const nextIndex = event.key === 'ArrowRight' 
+          ? (currentIndex + 1) % pastaTypes.length
+          : (currentIndex - 1 + pastaTypes.length) % pastaTypes.length;
+        
+        handlePastaSelect(pastaTypes[nextIndex], nextIndex);
+      }
+    };
 
-    return () => clearInterval(interval);
-  }, [isRunning, timeRemaining]);
+    window.addEventListener('keydown', handleKeyPress);
+    return () => window.removeEventListener('keydown', handleKeyPress);
+  }, [selectedPasta]);
 
   const handlePastaSelect = (pasta: PastaType, index: number) => {
-    if (isRunning) return;
+    if (isRunning) return; // Don't allow selection while timer is running
     
     setFlippingIndex(index);
     setTimeout(() => {
       setSelectedPasta(pasta);
-      setTimeRemaining(pasta.time);
-      setCustomTime(pasta.time);
+      const timeToUse = customTime || pasta.time;
+      setCurrentTime(timeToUse);
+      setIsTimerComplete(false);
       setFlippingIndex(null);
-    }, 350);
+    }, 400);
+  };
+
+  const handleCustomTimeChange = (minutes: number) => {
+    if (isRunning) return;
+    const timeInSeconds = minutes * 60;
+    setCustomTime(timeInSeconds);
+    setCurrentTime(timeInSeconds);
+    setIsTimerComplete(false);
+  };
+
+  const handleResetToDefault = () => {
+    if (isRunning) return;
+    setCustomTime(null);
+    setCurrentTime(selectedPasta.time);
+    setIsTimerComplete(false);
+  };
+
+  const getDisplayTime = () => {
+    return customTime || selectedPasta.time;
   };
 
   const handleStart = () => {
     setIsRunning(true);
+    setIsTimerComplete(false);
   };
 
   const handlePause = () => {
@@ -106,81 +127,106 @@ const Index = () => {
 
   const handleReset = () => {
     setIsRunning(false);
-    setTimeRemaining(customTime);
+    const timeToUse = customTime || selectedPasta.time;
+    setCurrentTime(timeToUse);
+    setIsTimerComplete(false);
   };
 
-  const handleTimerComplete = () => {
+  const handleTimerComplete = useCallback(() => {
     setIsRunning(false);
-  };
-
-  const handleCustomTimeChange = (minutes: number) => {
-    const newTime = Math.floor(minutes * 60);
-    setCustomTime(newTime);
-    if (!isRunning) {
-      setTimeRemaining(newTime);
-    }
-  };
-
-  const handleResetToDefault = () => {
-    setCustomTime(selectedPasta.time);
-    if (!isRunning) {
-      setTimeRemaining(selectedPasta.time);
-    }
-  };
-
-  const hasCustomTime = customTime !== selectedPasta.time;
+    setIsTimerComplete(true);
+    console.log('perfect! your pasta is ready!');
+  }, []);
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-mediterranean-cream via-sea-mist to-lemon-sun/20 flex flex-col items-center justify-start p-4 font-playfair relative overflow-hidden">
+    <div className="min-h-screen relative overflow-hidden mediterranean-texture">
       <DecorationElements />
       
-      {/* Header */}
-      <div className="text-center mb-8 mt-8 relative z-10">
-        <h1 className="text-4xl md:text-6xl font-bold text-volcanic-stone mb-2 font-dancing">
-          Limoncello
-        </h1>
-        <p className="text-lg text-volcanic-stone/80 italic">
-          where time meets tradition
-        </p>
-      </div>
-
-      {/* Main Content */}
-      <div className="flex flex-col lg:flex-row items-start justify-center gap-12 w-full max-w-6xl relative z-10">
-        {/* Recipe Book */}
-        <div className="w-full lg:w-auto flex-shrink-0">
-          <RecipeBook 
-            pastaTypes={pastaTypes}
-            selectedPasta={selectedPasta}
-            onPastaSelect={handlePastaSelect}
-            flippingIndex={flippingIndex}
-            isRunning={isRunning}
-          />
+      <div className="container mx-auto px-6 py-12 relative z-10">
+        {/* Header */}
+        <div className="text-center mb-16">
+          <div className="flex items-center justify-center mb-6">
+            <Heart className="text-terracotta-warm mr-4 animate-story-shimmer" size={32} />
+            <h1 className="text-6xl font-bold bg-gradient-to-r from-lemon-sun via-terracotta-warm to-mediterranean-blue bg-clip-text text-transparent font-dancing">
+              limoncello
+            </h1>
+            <ChefHat className="text-olive-grove ml-4 animate-gentle-sway" size={32} />
+          </div>
+          <p className="text-xl text-volcanic-stone opacity-90 max-w-2xl mx-auto font-dancing leading-relaxed">
+            where every pasta tells a story...
+          </p>
         </div>
 
-        {/* Timer Section */}
-        <div className="flex flex-col items-center space-y-8 lg:ml-8">
-          <CircularTimer 
-            duration={customTime}
-            currentTime={timeRemaining}
-            setCurrentTime={setTimeRemaining}
-            isRunning={isRunning}
-            onComplete={handleTimerComplete}
-          />
-          
-          <TimerControls
-            isRunning={isRunning}
-            onStart={handleStart}
-            onPause={handlePause}
-            onReset={handleReset}
-          />
+        {/* Main content */}
+        <div className="max-w-6xl mx-auto">
+          <div className="grid lg:grid-cols-2 gap-16 items-center">
+            {/* Timer section */}
+            <div className="flex flex-col items-center">
+              <div className="mb-8 text-center">
+                <h2 className="text-3xl font-bold text-volcanic-stone mb-3 font-dancing">
+                  {selectedPasta.name}
+                </h2>
+                <p className="text-sm text-volcanic-stone/70 uppercase tracking-wide font-medium mb-2">
+                  {selectedPasta.location}
+                </p>
+                <p className="text-base text-volcanic-stone opacity-80 max-w-md mx-auto font-playfair italic leading-relaxed">
+                  {selectedPasta.description}
+                </p>
+              </div>
+              
+              <CircularTimer
+                duration={getDisplayTime()}
+                isRunning={isRunning}
+                onComplete={handleTimerComplete}
+                currentTime={currentTime}
+                setCurrentTime={setCurrentTime}
+              />
 
-          <CustomTimeInput
-            onTimeChange={handleCustomTimeChange}
-            onResetToDefault={handleResetToDefault}
-            defaultTime={selectedPasta.time}
-            isRunning={isRunning}
-            hasCustomTime={hasCustomTime}
-          />
+              <CustomTimeInput
+                onTimeChange={handleCustomTimeChange}
+                onResetToDefault={handleResetToDefault}
+                defaultTime={selectedPasta.time}
+                isRunning={isRunning}
+                hasCustomTime={customTime !== null}
+              />
+              
+              <TimerControls
+                isRunning={isRunning}
+                onStart={handleStart}
+                onPause={handlePause}
+                onReset={handleReset}
+              />
+
+              {isTimerComplete && (
+                <div className="mt-8 bg-gradient-to-r from-lemon-sun to-terracotta-warm text-white px-8 py-4 rounded-full animate-story-shimmer shadow-2xl">
+                  <span className="font-bold font-dancing text-lg">perfect! your pasta is ready!</span>
+                </div>
+              )}
+            </div>
+
+            {/* Recipe Book */}
+            <div className="space-y-6">
+              <RecipeBook
+                pastaTypes={pastaTypes}
+                selectedPasta={selectedPasta}
+                onPastaSelect={handlePastaSelect}
+                flippingIndex={flippingIndex}
+                isRunning={isRunning}
+              />
+            </div>
+          </div>
+        </div>
+
+        {/* Footer */}
+        <div className="text-center mt-20 opacity-80">
+          <div className="flex items-center justify-center mb-4">
+            <div className="h-px bg-gradient-to-r from-transparent via-volcanic-stone/30 to-transparent w-32"></div>
+            <Heart className="text-terracotta-warm mx-4 animate-story-shimmer" size={20} />
+            <div className="h-px bg-gradient-to-r from-transparent via-volcanic-stone/30 to-transparent w-32"></div>
+          </div>
+          <p className="text-lg text-volcanic-stone font-dancing leading-relaxed">
+            inspired by moments shared from mount etna to amalfi
+          </p>
         </div>
       </div>
     </div>
