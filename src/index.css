@@ -42,7 +42,7 @@
 @layer base {
   * {
     @apply border-border;
-    cursor: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='20' height='24' viewBox='0 0 20 24' fill='none'><ellipse cx='10' cy='16' rx='8' ry='6' fill='%23FFD700' stroke='%23FFA500' stroke-width='1'/><path d='M10 4c-2 0-3 2-3 4v6c0 2 1 4 3 4s3-2 3-4V8c0-2-1-4-3-4z' fill='%23FFFF00'/><circle cx='8' cy='12' r='1' fill='%23FFD700'/><circle cx='12' cy='14' r='1' fill='%23FFD700'/></svg>") 10 12, auto;
+    cursor: url("data:text/plain;charset=UTF-8,🌿") 16 16, auto;
   }
 
   body {
