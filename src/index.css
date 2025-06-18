@@ -36,16 +36,6 @@
     --ring: 222.2 84% 4.9%;
 
     --radius: 0.5rem;
-
-    /* Mediterranean color variables */
-    --mediterranean-cream: #F5F5DC;
-    --volcanic-stone: #2C3E50;
-    --terracotta-warm: #D2691E;
-    --lemon-sun: #FFD700;
-    --olive-grove: #6B7B3F;
-    --amalfi-blue: #4682B4;
-    --sea-mist: #E0F2F1;
-    --coastal-green: #F0F8E8;
   }
 }
 
@@ -55,17 +45,10 @@
   }
 
   body {
-    background-color: var(--mediterranean-cream);
-    background: linear-gradient(135deg, var(--mediterranean-cream) 0%, var(--sea-mist) 30%, var(--coastal-green) 70%, var(--mediterranean-cream) 100%);
-    color: var(--volcanic-stone);
+    @apply bg-mediterranean-cream text-volcanic-stone font-sans;
+    background: linear-gradient(135deg, #F5F5DC 0%, #E0F2F1 30%, #F0F8E8 70%, #F5F5DC 100%);
     min-height: 100vh;
     font-family: 'Georgia', serif;
-    cursor: auto;
-  }
-
-  /* Apply herb cursor to interactive elements */
-  button, a, [role="button"], .cursor-pointer {
-    cursor: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'><text y='20' font-size='16'>🌿</text></svg>") 12 12, pointer;
   }
 }
 
