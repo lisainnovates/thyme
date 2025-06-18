@@ -109,14 +109,26 @@ const Index = () => {
     setTimeRemaining(customTime);
   };
 
-  const handleCustomTimeSet = (newTime: number) => {
+  const handleTimerComplete = () => {
+    setIsRunning(false);
+  };
+
+  const handleCustomTimeChange = (minutes: number) => {
+    const newTime = Math.floor(minutes * 60);
     setCustomTime(newTime);
     if (!isRunning) {
       setTimeRemaining(newTime);
     }
   };
 
-  const progress = timeRemaining / customTime;
+  const handleResetToDefault = () => {
+    setCustomTime(selectedPasta.time);
+    if (!isRunning) {
+      setTimeRemaining(selectedPasta.time);
+    }
+  };
+
+  const hasCustomTime = customTime !== selectedPasta.time;
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-mediterranean-cream via-sea-mist to-lemon-sun/20 flex flex-col items-center justify-start p-4 font-playfair relative overflow-hidden">
@@ -148,10 +160,11 @@ const Index = () => {
         {/* Timer Section */}
         <div className="flex flex-col items-center space-y-8 lg:ml-8">
           <CircularTimer 
-            timeRemaining={timeRemaining}
-            totalTime={customTime}
-            progress={progress}
+            duration={customTime}
+            currentTime={timeRemaining}
+            setCurrentTime={setTimeRemaining}
             isRunning={isRunning}
+            onComplete={handleTimerComplete}
           />
           
           <TimerControls
@@ -162,9 +175,11 @@ const Index = () => {
           />
 
           <CustomTimeInput
-            customTime={customTime}
-            onTimeSet={handleCustomTimeSet}
+            onTimeChange={handleCustomTimeChange}
+            onResetToDefault={handleResetToDefault}
+            defaultTime={selectedPasta.time}
             isRunning={isRunning}
+            hasCustomTime={hasCustomTime}
           />
         </div>
       </div>
