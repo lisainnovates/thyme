@@ -51,11 +51,11 @@ const pastaTypes: PastaType[] = [
     location: 'amalfi, italy'
   },
   {
-    name: 'ravioli',
+    name: 'the art of perfect timing',
     time: 240, // 4 minutes
-    description: 'delicate pasta pillows, filled with sicilian tradition.',
+    description: 'knowing when something is ready takes patience and love.',
     story: 'sunday mornings in nonna\'s kitchen, where hands speak love...',
-    location: 'taormina, italy'
+    location: ''
   }
 ];
 
