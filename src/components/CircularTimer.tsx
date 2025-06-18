@@ -17,25 +17,31 @@ const CircularTimer: React.FC<CircularTimerProps> = ({
 }) => {
   const intervalRef = useRef<NodeJS.Timeout | null>(null);
   
-  // Create a simple bell sound using Web Audio API
+  // Create a kitchen alarm sound using Web Audio API
   const playCompletionSound = () => {
     try {
       const audioContext = new (window.AudioContext || (window as any).webkitAudioContext)();
-      const oscillator = audioContext.createOscillator();
-      const gainNode = audioContext.createGain();
       
-      oscillator.connect(gainNode);
-      gainNode.connect(audioContext.destination);
-      
-      oscillator.frequency.setValueAtTime(800, audioContext.currentTime);
-      oscillator.frequency.setValueAtTime(600, audioContext.currentTime + 0.1);
-      oscillator.frequency.setValueAtTime(800, audioContext.currentTime + 0.2);
-      
-      gainNode.gain.setValueAtTime(0.3, audioContext.currentTime);
-      gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.5);
-      
-      oscillator.start(audioContext.currentTime);
-      oscillator.stop(audioContext.currentTime + 0.5);
+      // Create multiple beeps like a kitchen timer
+      const beepCount = 5;
+      for (let i = 0; i < beepCount; i++) {
+        const oscillator = audioContext.createOscillator();
+        const gainNode = audioContext.createGain();
+        
+        oscillator.connect(gainNode);
+        gainNode.connect(audioContext.destination);
+        
+        // Higher pitched beep sound (like kitchen timers)
+        oscillator.frequency.setValueAtTime(1000, audioContext.currentTime + i * 0.3);
+        
+        // Short, sharp beeps
+        gainNode.gain.setValueAtTime(0, audioContext.currentTime + i * 0.3);
+        gainNode.gain.setValueAtTime(0.4, audioContext.currentTime + i * 0.3 + 0.01);
+        gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + i * 0.3 + 0.15);
+        
+        oscillator.start(audioContext.currentTime + i * 0.3);
+        oscillator.stop(audioContext.currentTime + i * 0.3 + 0.15);
+      }
     } catch (error) {
       console.log('Audio not available:', error);
     }
