@@ -1,3 +1,4 @@
+
 import React, { useState, useCallback, useEffect } from 'react';
 import CircularTimer from '../components/CircularTimer';
 import RecipeBook from '../components/RecipeBook';
@@ -281,7 +282,7 @@ const Index = () => {
             <div className="h-px bg-gradient-to-r from-transparent via-volcanic-stone/30 to-transparent w-32"></div>
           </div>
           <p className="text-lg text-volcanic-stone font-dancing leading-relaxed">
-            inspired by moments shared from mount etna to amalfi
+            inspired by moments shared from mount etna to the coast of sorrento
           </p>
         </div>
       </div>
