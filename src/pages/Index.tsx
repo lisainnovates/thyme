@@ -19,7 +19,7 @@ const pastaTypes: PastaType[] = [
   {
     name: 'spaghetti',
     time: 600, // 10 minutes
-    description: 'creamy and enveloping, like a warm roman embrace.',
+    description: 'creamy and enveloping, like a warm embrace.',
     story: 'a secret recipe where eggs are whispered to gently, never rushed...',
     location: 'naples'
   },
