@@ -73,6 +73,47 @@
   animation: cookbook-flip 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
+/* 3D perspective utilities */
+.perspective-1000 {
+  perspective: 1000px;
+}
+
+.preserve-3d {
+  transform-style: preserve-3d;
+}
+
+.transform-style-preserve-3d {
+  transform-style: preserve-3d;
+}
+
+/* Page flip animation */
+@keyframes page-flip {
+  0% {
+    transform: rotateY(0deg) translateZ(0px);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  }
+  25% {
+    transform: rotateY(-15deg) translateZ(20px);
+    box-shadow: -5px 10px 25px rgba(0, 0, 0, 0.2);
+  }
+  50% {
+    transform: rotateY(-90deg) translateZ(30px);
+    box-shadow: -10px 15px 35px rgba(0, 0, 0, 0.3);
+  }
+  75% {
+    transform: rotateY(-165deg) translateZ(20px);
+    box-shadow: 5px 10px 25px rgba(0, 0, 0, 0.2);
+  }
+  100% {
+    transform: rotateY(-180deg) translateZ(0px);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  }
+}
+
+.animate-page-flip {
+  animation: page-flip 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
 .story-glow {
   background: radial-gradient(circle at center, rgba(230, 184, 0, 0.2) 0%, transparent 70%);
 }
