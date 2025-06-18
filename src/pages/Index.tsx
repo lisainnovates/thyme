@@ -1,4 +1,3 @@
-
 import React, { useState, useCallback, useEffect } from 'react';
 import CircularTimer from '../components/CircularTimer';
 import RecipeBook from '../components/RecipeBook';
@@ -51,11 +50,11 @@ const pastaTypes: PastaType[] = [
     location: 'amalfi, italy'
   },
   {
-    name: 'the art of perfect timing',
+    name: 'ravioli',
     time: 240, // 4 minutes
-    description: 'knowing when something is ready takes patience and love.',
+    description: 'delicate pasta pillows, filled with sicilian tradition.',
     story: 'sunday mornings in nonna\'s kitchen, where hands speak love...',
-    location: ''
+    location: 'taormina, italy'
   }
 ];
 
