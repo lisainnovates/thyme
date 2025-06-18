@@ -205,7 +205,7 @@ const Index = () => {
           <div className="flex items-center justify-center mb-6">
             <Heart className="text-terracotta-warm mr-4 animate-story-shimmer" size={32} />
             <h1 className="text-6xl font-bold bg-gradient-to-r from-lemon-sun via-terracotta-warm to-mediterranean-blue bg-clip-text text-transparent font-dancing">
-              limoncello
+              thyme
             </h1>
             <ChefHat className="text-olive-grove ml-4 animate-gentle-sway" size={32} />
           </div>
