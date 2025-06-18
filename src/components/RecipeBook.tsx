@@ -100,7 +100,7 @@ const RecipeBook: React.FC<RecipeBookProps> = ({
       {/* Book title and page indicator */}
       <div className="text-center mt-6">
         <h3 className="text-lg font-bold text-volcanic-stone font-serif mb-2">
-          family recipe book
+          the pasta collection
         </h3>
         <div className="flex items-center justify-center space-x-2">
           {pastaTypes.map((_, index) => (
