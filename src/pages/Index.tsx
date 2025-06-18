@@ -1,7 +1,7 @@
 
 import React, { useState, useCallback, useEffect } from 'react';
 import CircularTimer from '../components/CircularTimer';
-import PastaCard from '../components/PastaCard';
+import RecipeBook from '../components/RecipeBook';
 import TimerControls from '../components/TimerControls';
 import DecorationElements from '../components/DecorationElements';
 import { ChefHat, Heart } from 'lucide-react';
@@ -121,7 +121,7 @@ const Index = () => {
       <DecorationElements />
       
       <div className="container mx-auto px-6 py-12 relative z-10">
-        {/* Header - like opening a beloved cookbook */}
+        {/* Header */}
         <div className="text-center mb-16">
           <div className="flex items-center justify-center mb-6">
             <Heart className="text-terracotta-warm mr-4 animate-story-shimmer" size={32} />
@@ -138,7 +138,7 @@ const Index = () => {
         {/* Main content */}
         <div className="max-w-6xl mx-auto">
           <div className="grid lg:grid-cols-2 gap-16 items-center">
-            {/* Timer section - nonna's watchful guidance */}
+            {/* Timer section */}
             <div className="flex flex-col items-center">
               <div className="mb-8 text-center">
                 <h2 className="text-3xl font-bold text-volcanic-stone mb-3 font-serif">
@@ -174,31 +174,20 @@ const Index = () => {
               )}
             </div>
 
-            {/* Recipe cards - like flipping through nonna's cookbook */}
+            {/* Recipe Book */}
             <div className="space-y-6">
-              <h3 className="text-2xl font-bold text-volcanic-stone text-center mb-8 font-serif">
-                family stories
-              </h3>
-              <div className="grid grid-cols-2 gap-6">
-                {pastaTypes.map((pasta, index) => (
-                  <PastaCard
-                    key={pasta.name}
-                    pasta={pasta}
-                    isSelected={selectedPasta.name === pasta.name}
-                    onClick={() => handlePastaSelect(pasta, index)}
-                    isFlipping={flippingIndex === index}
-                  />
-                ))}
-              </div>
-              
-              <div className="text-center text-sm text-volcanic-stone/60 mt-6 font-serif italic">
-                use arrow keys to browse recipes
-              </div>
+              <RecipeBook
+                pastaTypes={pastaTypes}
+                selectedPasta={selectedPasta}
+                onPastaSelect={handlePastaSelect}
+                flippingIndex={flippingIndex}
+                isRunning={isRunning}
+              />
             </div>
           </div>
         </div>
 
-        {/* Footer - heartfelt inspiration */}
+        {/* Footer */}
         <div className="text-center mt-20 opacity-80">
           <div className="flex items-center justify-center mb-4">
             <div className="h-px bg-gradient-to-r from-transparent via-volcanic-stone/30 to-transparent w-32"></div>

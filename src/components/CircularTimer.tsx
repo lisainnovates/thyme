@@ -1,8 +1,8 @@
 
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 
 interface CircularTimerProps {
-  duration: number; // in seconds
+  duration: number;
   isRunning: boolean;
   onComplete: () => void;
   currentTime: number;
@@ -16,133 +16,137 @@ const CircularTimer: React.FC<CircularTimerProps> = ({
   currentTime,
   setCurrentTime
 }) => {
+  const intervalRef = useRef<NodeJS.Timeout | null>(null);
+  
   useEffect(() => {
-    let interval: NodeJS.Timeout;
-    
     if (isRunning && currentTime > 0) {
-      interval = setInterval(() => {
+      intervalRef.current = setInterval(() => {
         setCurrentTime(currentTime - 1);
       }, 1000);
-    } else if (currentTime === 0) {
+    } else if (currentTime === 0 && isRunning) {
       onComplete();
+    } else {
+      if (intervalRef.current) {
+        clearInterval(intervalRef.current);
+      }
     }
 
-    return () => clearInterval(interval);
+    return () => {
+      if (intervalRef.current) {
+        clearInterval(intervalRef.current);
+      }
+    };
   }, [isRunning, currentTime, onComplete, setCurrentTime]);
 
-  const radius = 85;
-  const circumference = 2 * Math.PI * radius;
-  const strokeDashoffset = circumference - (currentTime / duration) * circumference;
+  const progress = ((duration - currentTime) / duration) * 100;
+  const circumference = 2 * Math.PI * 120;
+  const strokeDashoffset = circumference - (progress / 100) * circumference;
 
-  const formatTime = (seconds: number) => {
-    const mins = Math.floor(seconds / 60);
-    const secs = seconds % 60;
-    return `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
-  };
+  const minutes = Math.floor(currentTime / 60);
+  const seconds = currentTime % 60;
 
   return (
     <div className="relative flex flex-col items-center">
-      {/* Floating lemon leaves - nonna's garden touch */}
-      <div className="absolute -top-12 -left-12 animate-mediterranean-breeze">
-        <svg width="28" height="28" viewBox="0 0 24 24" className="text-olive-grove">
-          <path
-            d="M12 2c3 0 6 2 6 6 0 3-2 5-4 6-1 1-2 1-2 1s-1 0-2-1c-2-1-4-3-4-6 0-4 3-6 6-6z"
-            fill="currentColor"
-            opacity="0.7"
-          />
-          <path
-            d="M12 8c1 0 2 1 2 2s-1 2-2 2-2-1-2-2 1-2 2-2z"
-            fill="#8FBC8F"
-            opacity="0.9"
-          />
-        </svg>
-      </div>
-
-      {/* Main timer circle - like nonna's watchful eye */}
-      <div className="relative mediterranean-texture rounded-full p-4">
-        <svg className="w-52 h-52 transform -rotate-90" viewBox="0 0 200 200">
-          {/* Outer decorative ring */}
+      {/* Timer Circle */}
+      <div className="relative w-80 h-80 mb-8">
+        <svg
+          className="w-full h-full transform -rotate-90"
+          viewBox="0 0 256 256"
+        >
+          {/* Background circle */}
           <circle
-            cx="100"
-            cy="100"
-            r="95"
-            stroke="url(#outerGradient)"
-            strokeWidth="2"
+            cx="128"
+            cy="128"
+            r="120"
             fill="none"
-            className="opacity-20"
+            stroke="rgba(139, 188, 143, 0.2)"
+            strokeWidth="8"
+            className="drop-shadow-sm"
           />
           
-          {/* Background circle - like worn cookbook pages */}
+          {/* Progress circle */}
           <circle
-            cx="100"
-            cy="100"
-            r={radius}
-            stroke="#F8F4E6"
-            strokeWidth="12"
+            cx="128"
+            cy="128"
+            r="120"
             fill="none"
-            className="opacity-40"
-          />
-          
-          {/* Animated progress circle - warm Mediterranean sun */}
-          <circle
-            cx="100"
-            cy="100"
-            r={radius}
             stroke="url(#timerGradient)"
-            strokeWidth="12"
-            fill="none"
+            strokeWidth="8"
+            strokeLinecap="round"
             strokeDasharray={circumference}
             strokeDashoffset={strokeDashoffset}
-            className="transition-all duration-1000 ease-out"
-            strokeLinecap="round"
+            className="transition-all duration-1000 ease-linear drop-shadow-lg"
+            style={{
+              filter: 'drop-shadow(0 0 8px rgba(230, 126, 34, 0.4))'
+            }}
           />
-          
-          {/* Gradient definitions */}
+
+          {/* Gradient definition */}
           <defs>
             <linearGradient id="timerGradient" x1="0%" y1="0%" x2="100%" y2="100%">
               <stop offset="0%" stopColor="#F1C40F" />
-              <stop offset="30%" stopColor="#E67E22" />
-              <stop offset="70%" stopColor="#3498DB" />
-              <stop offset="100%" stopColor="#8FBC8F" />
-            </linearGradient>
-            <linearGradient id="outerGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-              <stop offset="0%" stopColor="#5DADE2" />
-              <stop offset="100%" stopColor="#F7DC6F" />
+              <stop offset="50%" stopColor="#E67E22" />
+              <stop offset="100%" stopColor="#D35400" />
             </linearGradient>
           </defs>
         </svg>
 
-        {/* Center content - like reading a beloved recipe */}
-        <div className="absolute inset-0 flex items-center justify-center">
-          <div className="text-center bg-white/80 backdrop-blur-sm rounded-full p-6 shadow-lg">
-            <div className="text-4xl font-bold text-volcanic-stone mb-2 font-serif">
-              {formatTime(currentTime)}
-            </div>
-            <div className="text-sm text-terracotta-warm font-medium font-serif italic">
-              {currentTime === 0 ? 'Perfetto!' : 'Al dente...'}
-            </div>
+        {/* Center content */}
+        <div className="absolute inset-0 flex flex-col items-center justify-center">
+          {/* Digital time display */}
+          <div className="text-5xl font-bold text-volcanic-stone font-mono mb-2 tracking-wider">
+            {minutes.toString().padStart(2, '0')}:{seconds.toString().padStart(2, '0')}
+          </div>
+          
+          {/* Hand-drawn lemon accent */}
+          <div className="animate-gentle-sway">
+            <svg width="40" height="40" viewBox="0 0 48 48" className="text-lemon-sun opacity-80">
+              <path
+                d="M24 8c-4 0-7 3-8 8-1 6 0 12 2 17 2 5 5 7 6 7s4-2 6-7c2-5 3-11 2-17-1-5-4-8-8-8z"
+                fill="currentColor"
+                stroke="currentColor"
+                strokeWidth="1"
+                style={{
+                  filter: 'drop-shadow(0 0 4px rgba(241, 196, 15, 0.3))'
+                }}
+              />
+              <path
+                d="M24 12c-1 0-2 1-2 2s1 2 2 2 2-1 2-2-1-2-2-2z"
+                fill="#F7DC6F"
+                opacity="0.8"
+              />
+            </svg>
           </div>
         </div>
 
-        {/* Nonna's wisdom - gentle guidance */}
-        <div className="absolute -bottom-4 left-1/2 transform -translate-x-1/2">
-          <div className="bg-lemon-sun/20 backdrop-blur-sm rounded-full px-4 py-1">
-            <span className="text-xs text-volcanic-stone font-serif italic">
-              Come nonna insegnava
-            </span>
-          </div>
+        {/* Decorative elements around the timer */}
+        <div className="absolute -top-4 -left-4 animate-mediterranean-breeze" style={{ animationDelay: '1s' }}>
+          <svg width="24" height="24" viewBox="0 0 24 24" className="text-olive-grove opacity-60">
+            <path
+              d="M12 2c3 0 6 1 7 4v12c0 3-3 5-7 5s-7-2-7-5V6c1-3 4-4 7-4z"
+              fill="currentColor"
+              stroke="currentColor"
+              strokeWidth="0.5"
+            />
+            <ellipse cx="12" cy="8" rx="3" ry="2" fill="currentColor" opacity="0.6" />
+          </svg>
         </div>
-      </div>
 
-      {/* Floating basil sprig - Mediterranean breeze */}
-      <div className="absolute -bottom-8 -right-8 animate-gentle-sway">
-        <svg width="24" height="24" viewBox="0 0 24 24" className="text-olive-grove">
-          <path
-            d="M12 2l2 4 4 2-4 2-2 4-2-4-4-2 4-2 2-4z"
-            fill="currentColor"
-            opacity="0.8"
-          />
-        </svg>
+        <div className="absolute -bottom-4 -right-4 animate-gentle-sway" style={{ animationDelay: '2s' }}>
+          <svg width="20" height="20" viewBox="0 0 24 24" className="text-amalfi-blue opacity-70">
+            <circle 
+              cx="12" 
+              cy="12" 
+              r="8" 
+              fill="none" 
+              stroke="currentColor" 
+              strokeWidth="2" 
+              opacity="0.6"
+              strokeDasharray="3,2"
+            />
+            <circle cx="12" cy="12" r="3" fill="currentColor" opacity="0.8" />
+          </svg>
+        </div>
       </div>
     </div>
   );
