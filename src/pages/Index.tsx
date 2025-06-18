@@ -1,8 +1,10 @@
+
 import React, { useState, useCallback, useEffect } from 'react';
 import CircularTimer from '../components/CircularTimer';
 import RecipeBook from '../components/RecipeBook';
 import TimerControls from '../components/TimerControls';
 import DecorationElements from '../components/DecorationElements';
+import CustomTimeInput from '../components/CustomTimeInput';
 import { ChefHat, Heart } from 'lucide-react';
 
 interface PastaType {
@@ -19,14 +21,14 @@ const pastaTypes: PastaType[] = [
     time: 600, // 10 minutes
     description: 'creamy and enveloping, like a warm roman embrace.',
     story: 'nonna maria\'s secret: never let the eggs scramble, whisper to them gently...',
-    location: 'rome, italy'
+    location: 'naples, italy'
   },
   {
     name: 'penne',
     time: 660, // 11 minutes
     description: 'spicy like the sicilian character, sweet like the sunset.',
     story: 'from giuseppe\'s kitchen in palermo, where passion meets perfection...',
-    location: 'palermo, italy'
+    location: 'liguria, italy'
   },
   {
     name: 'fettuccine',
@@ -40,21 +42,21 @@ const pastaTypes: PastaType[] = [
     time: 720, // 12 minutes
     description: 'a tribute to etna, with eggplant and aged ricotta.',
     story: 'born in catania\'s shadow of etna, where volcanic soil feeds the soul...',
-    location: 'catania, italy'
+    location: 'lazio, italy'
   },
   {
     name: 'linguine',
     time: 540, // 9 minutes
     description: 'the taste of the amalfi sea, whispers of salty waves.',
     story: 'fishermen\'s wives in amalfi, cooking with the catch of the day...',
-    location: 'amalfi, italy'
+    location: 'liguria, italy'
   },
   {
     name: 'ravioli',
     time: 240, // 4 minutes
     description: 'delicate pasta pillows, filled with sicilian tradition.',
     story: 'sunday mornings in nonna\'s kitchen, where hands speak love...',
-    location: 'taormina, italy'
+    location: 'lombardy, italy'
   }
 ];
 
@@ -64,6 +66,7 @@ const Index = () => {
   const [isRunning, setIsRunning] = useState<boolean>(false);
   const [flippingIndex, setFlippingIndex] = useState<number | null>(null);
   const [isTimerComplete, setIsTimerComplete] = useState<boolean>(false);
+  const [customTime, setCustomTime] = useState<number | null>(null);
 
   // Handle keyboard navigation
   useEffect(() => {
@@ -88,10 +91,30 @@ const Index = () => {
     setFlippingIndex(index);
     setTimeout(() => {
       setSelectedPasta(pasta);
-      setCurrentTime(pasta.time);
+      const timeToUse = customTime || pasta.time;
+      setCurrentTime(timeToUse);
       setIsTimerComplete(false);
       setFlippingIndex(null);
     }, 400);
+  };
+
+  const handleCustomTimeChange = (minutes: number) => {
+    if (isRunning) return;
+    const timeInSeconds = minutes * 60;
+    setCustomTime(timeInSeconds);
+    setCurrentTime(timeInSeconds);
+    setIsTimerComplete(false);
+  };
+
+  const handleResetToDefault = () => {
+    if (isRunning) return;
+    setCustomTime(null);
+    setCurrentTime(selectedPasta.time);
+    setIsTimerComplete(false);
+  };
+
+  const getDisplayTime = () => {
+    return customTime || selectedPasta.time;
   };
 
   const handleStart = () => {
@@ -105,7 +128,8 @@ const Index = () => {
 
   const handleReset = () => {
     setIsRunning(false);
-    setCurrentTime(selectedPasta.time);
+    const timeToUse = customTime || selectedPasta.time;
+    setCurrentTime(timeToUse);
     setIsTimerComplete(false);
   };
 
@@ -152,11 +176,19 @@ const Index = () => {
               </div>
               
               <CircularTimer
-                duration={selectedPasta.time}
+                duration={getDisplayTime()}
                 isRunning={isRunning}
                 onComplete={handleTimerComplete}
                 currentTime={currentTime}
                 setCurrentTime={setCurrentTime}
+              />
+
+              <CustomTimeInput
+                onTimeChange={handleCustomTimeChange}
+                onResetToDefault={handleResetToDefault}
+                defaultTime={selectedPasta.time}
+                isRunning={isRunning}
+                hasCustomTime={customTime !== null}
               />
               
               <TimerControls
