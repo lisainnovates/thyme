@@ -1,4 +1,3 @@
-
 import type { Config } from "tailwindcss";
 
 export default {
@@ -53,13 +52,19 @@ export default {
 					DEFAULT: 'hsl(var(--card))',
 					foreground: 'hsl(var(--card-foreground))'
 				},
-				// Limoncello palette
-				'lemon-yellow': '#F7DC6F',
-				'lemon-green': '#BFD8B8',
-				'terracotta': '#D65A31',
-				'lava-orange': '#E25822',
-				'volcanic-gray': '#5A5A5A',
-				'creamy-white': '#FFF8E7'
+				// Mediterranean Limoncello palette
+				'mediterranean-blue': '#3498DB',
+				'amalfi-blue': '#5DADE2',
+				'olive-grove': '#8FBC8F',
+				'sicilian-olive': '#6B8E23',
+				'lemon-sun': '#F1C40F',
+				'coastal-yellow': '#F7DC6F',
+				'terracotta-warm': '#E67E22',
+				'etna-terracotta': '#D35400',
+				'volcanic-stone': '#34495E',
+				'mediterranean-cream': '#F8F4E6',
+				'sea-mist': '#E8F4F8',
+				'lemon-grove': '#F0F8E8'
 			},
 			borderRadius: {
 				lg: 'var(--radius)',
@@ -83,18 +88,25 @@ export default {
 						height: '0'
 					}
 				},
-				'sway': {
-					'0%, 100%': { transform: 'rotate(-2deg)' },
-					'50%': { transform: 'rotate(2deg)' }
+				'gentle-sway': {
+					'0%, 100%': { transform: 'translateX(-2px) rotate(-1deg)' },
+					'50%': { transform: 'translateX(2px) rotate(1deg)' }
 				},
-				'float': {
-					'0%, 100%': { transform: 'translateY(0px)' },
-					'50%': { transform: 'translateY(-6px)' }
+				'mediterranean-breeze': {
+					'0%, 100%': { transform: 'translateY(0px) rotate(0deg)' },
+					'33%': { transform: 'translateY(-3px) rotate(1deg)' },
+					'66%': { transform: 'translateY(1px) rotate(-0.5deg)' }
 				},
-				'page-flip': {
-					'0%': { transform: 'rotateY(0deg)' },
-					'50%': { transform: 'rotateY(90deg)' },
-					'100%': { transform: 'rotateY(0deg)' }
+				'story-shimmer': {
+					'0%, 100%': { opacity: '0.6', transform: 'scale(1)' },
+					'50%': { opacity: '1', transform: 'scale(1.05)' }
+				},
+				'cookbook-flip': {
+					'0%': { transform: 'rotateY(0deg) scale(1)' },
+					'25%': { transform: 'rotateY(45deg) scale(0.95)' },
+					'50%': { transform: 'rotateY(90deg) scale(0.9)' },
+					'75%': { transform: 'rotateY(135deg) scale(0.95)' },
+					'100%': { transform: 'rotateY(180deg) scale(1)' }
 				},
 				'timer-fill': {
 					'0%': { 'stroke-dashoffset': '0' },
@@ -104,9 +116,10 @@ export default {
 			animation: {
 				'accordion-down': 'accordion-down 0.2s ease-out',
 				'accordion-up': 'accordion-up 0.2s ease-out',
-				'sway': 'sway 3s ease-in-out infinite',
-				'float': 'float 2s ease-in-out infinite',
-				'page-flip': 'page-flip 0.6s ease-in-out',
+				'gentle-sway': 'gentle-sway 4s ease-in-out infinite',
+				'mediterranean-breeze': 'mediterranean-breeze 6s ease-in-out infinite',
+				'story-shimmer': 'story-shimmer 3s ease-in-out infinite',
+				'cookbook-flip': 'cookbook-flip 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94)',
 				'timer-fill': 'timer-fill linear'
 			}
 		}

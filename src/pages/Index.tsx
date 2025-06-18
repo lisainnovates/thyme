@@ -1,53 +1,66 @@
-
 import React, { useState, useCallback, useEffect } from 'react';
 import CircularTimer from '../components/CircularTimer';
 import PastaCard from '../components/PastaCard';
 import TimerControls from '../components/TimerControls';
 import DecorationElements from '../components/DecorationElements';
-import { ChefHat } from 'lucide-react';
+import { ChefHat, Heart } from 'lucide-react';
 
 interface PastaType {
   name: string;
   time: number; // in seconds
   description: string;
+  story: string;
+  location: string;
   icon: string;
 }
 
 const pastaTypes: PastaType[] = [
   {
-    name: 'Spaghetti',
+    name: 'Spaghetti alla Carbonara',
     time: 600, // 10 minutes
-    description: 'Classico spaghetti al dente per la perfetta carbonara o aglio e olio.',
+    description: 'Cremosa e avvolgente, come un abbraccio romano.',
+    story: 'Nonna Maria\'s secret: never let the eggs scramble, whisper to them gently...',
+    location: 'Roma, Lazio',
     icon: '🍝'
   },
   {
-    name: 'Penne',
+    name: 'Penne all\'Arrabbiata',
     time: 660, // 11 minutes
-    description: 'Penne rigate perfette per trattenere sughi cremosi e pesti.',
-    icon: '🍋'
+    description: 'Piccante come il carattere siciliano, dolce come il tramonto.',
+    story: 'From Giuseppe\'s kitchen in Palermo, where passion meets perfection...',
+    location: 'Palermo, Sicilia',
+    icon: '🌶️'
   },
   {
-    name: 'Fettuccine',
+    name: 'Fettuccine Alfredo',
     time: 480, // 8 minutes
-    description: 'Pasta fresca all\'uovo, ideale per ragù ricchi e burro e parmigiano.',
-    icon: '🌿'
+    description: 'Setosa come la seta, ricca come l\'amore di famiglia.',
+    story: 'Made famous in a small Roman trattoria, where dreams are born...',
+    location: 'Roma, Lazio',
+    icon: '🧈'
   },
   {
-    name: 'Rigatoni',
+    name: 'Rigatoni alla Norma',
     time: 720, // 12 minutes
-    description: 'Pasta robusta per sughi di carne e verdure, perfetta per il forno.',
-    icon: '🍅'
+    description: 'Un tributo all\'Etna, con melanzane e ricotta salata.',
+    story: 'Born in Catania\'s shadow of Etna, where volcanic soil feeds the soul...',
+    location: 'Catania, Sicilia',
+    icon: '🍆'
   },
   {
-    name: 'Linguine',
+    name: 'Linguine alle Vongole',
     time: 540, // 9 minutes
-    description: 'Sottili e eleganti, perfette con frutti di mare e pesto.',
-    icon: '🐟'
+    description: 'Il sapore del mare della costiera, sussurri di onde salate.',
+    story: 'Fishermen\'s wives in Amalfi, cooking with the catch of the day...',
+    location: 'Amalfi, Campania',
+    icon: '🐚'
   },
   {
-    name: 'Ravioli',
+    name: 'Ravioli di Ricotta',
     time: 240, // 4 minutes
-    description: 'Pasta ripiena delicata, cotta al punto giusto per non rompere.',
+    description: 'Delicati cuscini di pasta, ripieni di tradizione siciliana.',
+    story: 'Sunday mornings in nonna\'s kitchen, where hands speak love...',
+    location: 'Taormina, Sicilia',
     icon: '🥟'
   }
 ];
@@ -85,7 +98,7 @@ const Index = () => {
       setCurrentTime(pasta.time);
       setIsTimerComplete(false);
       setFlippingIndex(null);
-    }, 300);
+    }, 400);
   };
 
   const handleStart = () => {
@@ -106,38 +119,42 @@ const Index = () => {
   const handleTimerComplete = useCallback(() => {
     setIsRunning(false);
     setIsTimerComplete(true);
-    // Play notification sound or show toast here
-    console.log('Timer complete! Your pasta is ready!');
+    console.log('Perfetto! Your pasta is ready!');
   }, []);
 
   return (
-    <div className="min-h-screen relative overflow-hidden">
+    <div className="min-h-screen relative overflow-hidden mediterranean-texture">
       <DecorationElements />
       
-      <div className="container mx-auto px-4 py-8 relative z-10">
-        {/* Header */}
-        <div className="text-center mb-12">
-          <div className="flex items-center justify-center mb-4">
-            <ChefHat className="text-terracotta mr-3" size={36} />
-            <h1 className="text-5xl font-bold bg-gradient-to-r from-lava-orange to-terracotta bg-clip-text text-transparent">
+      <div className="container mx-auto px-6 py-12 relative z-10">
+        {/* Header - like opening a beloved cookbook */}
+        <div className="text-center mb-16">
+          <div className="flex items-center justify-center mb-6">
+            <Heart className="text-terracotta-warm mr-4 animate-story-shimmer" size={32} />
+            <h1 className="text-6xl font-bold bg-gradient-to-r from-lemon-sun via-terracotta-warm to-mediterranean-blue bg-clip-text text-transparent font-serif">
               Limoncello
             </h1>
+            <ChefHat className="text-olive-grove ml-4 animate-gentle-sway" size={32} />
           </div>
-          <p className="text-lg text-volcanic-gray opacity-80 max-w-md mx-auto">
-            Il timer perfetto per la pasta, ispirato dalla costiera amalfitana
+          <p className="text-xl text-volcanic-stone opacity-90 max-w-2xl mx-auto font-serif italic leading-relaxed">
+            Dove ogni pasta racconta una storia... <br />
+            <span className="text-lg text-terracotta-warm">Where every pasta tells a story</span>
           </p>
         </div>
 
-        {/* Main timer section */}
-        <div className="max-w-4xl mx-auto">
-          <div className="grid lg:grid-cols-2 gap-12 items-center">
-            {/* Timer */}
+        {/* Main content */}
+        <div className="max-w-6xl mx-auto">
+          <div className="grid lg:grid-cols-2 gap-16 items-center">
+            {/* Timer section - nonna's watchful guidance */}
             <div className="flex flex-col items-center">
-              <div className="mb-6">
-                <h2 className="text-2xl font-bold text-volcanic-gray text-center mb-2">
+              <div className="mb-8 text-center">
+                <h2 className="text-3xl font-bold text-volcanic-stone mb-3 font-serif">
                   {selectedPasta.name}
                 </h2>
-                <p className="text-sm text-volcanic-gray opacity-70 text-center max-w-xs">
+                <p className="text-sm text-volcanic-stone/70 uppercase tracking-wide font-medium mb-2">
+                  {selectedPasta.location}
+                </p>
+                <p className="text-base text-volcanic-stone opacity-80 max-w-md mx-auto font-serif italic leading-relaxed">
                   {selectedPasta.description}
                 </p>
               </div>
@@ -158,18 +175,20 @@ const Index = () => {
               />
 
               {isTimerComplete && (
-                <div className="mt-6 bg-gradient-to-r from-lava-orange to-terracotta text-creamy-white px-6 py-3 rounded-full animate-pulse">
-                  <span className="font-bold">🍝 La pasta è pronta! Buon appetito! 🍝</span>
+                <div className="mt-8 bg-gradient-to-r from-lemon-sun to-terracotta-warm text-white px-8 py-4 rounded-full animate-story-shimmer shadow-2xl">
+                  <span className="font-bold font-serif text-lg">🍝 Perfetto! La pasta è pronta! 🍝</span>
                 </div>
               )}
             </div>
 
-            {/* Pasta selection cards */}
-            <div className="space-y-4">
-              <h3 className="text-xl font-bold text-volcanic-gray text-center mb-6">
-                Scegli il tuo tipo di pasta
+            {/* Recipe cards - like flipping through nonna's cookbook */}
+            <div className="space-y-6">
+              <h3 className="text-2xl font-bold text-volcanic-stone text-center mb-8 font-serif">
+                Storie di Famiglia
+                <br />
+                <span className="text-lg text-terracotta-warm font-normal italic">Family Stories</span>
               </h3>
-              <div className="grid grid-cols-2 gap-4">
+              <div className="grid grid-cols-2 gap-6">
                 {pastaTypes.map((pasta, index) => (
                   <PastaCard
                     key={pasta.name}
@@ -181,17 +200,26 @@ const Index = () => {
                 ))}
               </div>
               
-              <div className="text-center text-sm text-volcanic-gray opacity-60 mt-4">
-                Usa le frecce ← → per navigare tra i tipi di pasta
+              <div className="text-center text-sm text-volcanic-stone/60 mt-6 font-serif italic">
+                Usa le frecce ← → per sfogliare le ricette <br />
+                <span className="text-xs">Use arrow keys to browse recipes</span>
               </div>
             </div>
           </div>
         </div>
 
-        {/* Footer with Amalfi inspiration */}
-        <div className="text-center mt-16 opacity-60">
-          <p className="text-sm text-volcanic-gray">
-            Ispirato dalle soleggiate terrazze di limoni della costiera amalfitana 🍋
+        {/* Footer - heartfelt inspiration */}
+        <div className="text-center mt-20 opacity-80">
+          <div className="flex items-center justify-center mb-4">
+            <div className="h-px bg-gradient-to-r from-transparent via-volcanic-stone/30 to-transparent w-32"></div>
+            <Heart className="text-terracotta-warm mx-4 animate-story-shimmer" size={20} />
+            <div className="h-px bg-gradient-to-r from-transparent via-volcanic-stone/30 to-transparent w-32"></div>
+          </div>
+          <p className="text-lg text-volcanic-stone font-serif italic leading-relaxed">
+            Inspired by moments shared from Mount Etna to Amalfi
+          </p>
+          <p className="text-sm text-volcanic-stone/70 mt-2 font-serif">
+            Ispirato dai momenti condivisi dall'Etna alla Costiera Amalfitana
           </p>
         </div>
       </div>

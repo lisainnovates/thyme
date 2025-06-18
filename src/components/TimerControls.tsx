@@ -16,38 +16,40 @@ const TimerControls: React.FC<TimerControlsProps> = ({
   onReset
 }) => {
   return (
-    <div className="flex justify-center items-center space-x-6 mt-8">
-      {/* Start/Pause Button */}
+    <div className="flex justify-center items-center space-x-8 mt-12">
+      {/* Start/Pause Button - like nonna's gentle command */}
       <button
         onClick={isRunning ? onPause : onStart}
-        className="bg-gradient-to-br from-lava-orange to-terracotta text-creamy-white 
-                   px-8 py-3 rounded-full shadow-lg transition-all duration-300 
-                   hover:scale-105 hover:shadow-xl active:scale-95
-                   flex items-center space-x-2 font-medium"
+        className="bg-gradient-to-br from-terracotta-warm to-etna-terracotta text-mediterranean-cream 
+                   px-10 py-4 rounded-full shadow-xl transition-all duration-300 
+                   hover:scale-110 hover:shadow-2xl active:scale-95
+                   flex items-center space-x-3 font-serif font-medium text-lg
+                   border-2 border-white/20 backdrop-blur-sm"
       >
         {isRunning ? (
           <>
-            <Pause size={20} />
+            <Pause size={24} />
             <span>Pausa</span>
           </>
         ) : (
           <>
-            <Play size={20} />
+            <Play size={24} />
             <span>Inizia</span>
           </>
         )}
       </button>
 
-      {/* Reset Button */}
+      {/* Reset Button - fresh start like morning in Sicily */}
       <button
         onClick={onReset}
-        className="bg-gradient-to-br from-lemon-green to-lemon-yellow text-volcanic-gray 
-                   px-6 py-3 rounded-full shadow-lg transition-all duration-300 
-                   hover:scale-105 hover:shadow-xl active:scale-95
-                   flex items-center space-x-2 font-medium"
+        className="bg-gradient-to-br from-olive-grove to-sicilian-olive text-mediterranean-cream 
+                   px-8 py-4 rounded-full shadow-xl transition-all duration-300 
+                   hover:scale-110 hover:shadow-2xl active:scale-95
+                   flex items-center space-x-3 font-serif font-medium
+                   border-2 border-white/20 backdrop-blur-sm"
       >
-        <RotateCcw size={18} />
-        <span>Reset</span>
+        <RotateCcw size={20} />
+        <span>Ricomincia</span>
       </button>
     </div>
   );
