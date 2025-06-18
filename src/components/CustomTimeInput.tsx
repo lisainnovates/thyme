@@ -1,7 +1,6 @@
 
 import React, { useState } from 'react';
 import { Clock, RotateCcw } from 'lucide-react';
-import { Input } from './ui/input';
 
 interface CustomTimeInputProps {
   onTimeChange: (minutes: number) => void;
@@ -18,53 +17,80 @@ const CustomTimeInput: React.FC<CustomTimeInputProps> = ({
   isRunning,
   hasCustomTime
 }) => {
-  const [inputValue, setInputValue] = useState<string>('');
+  const [inputValue, setInputValue] = useState('');
+  const [showInput, setShowInput] = useState(false);
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value;
-    setInputValue(value);
-
-    const minutes = parseFloat(value);
-    if (!isNaN(minutes) && minutes > 0 && minutes <= 60) {
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    const minutes = parseInt(inputValue);
+    if (minutes > 0 && minutes <= 60) {
       onTimeChange(minutes);
+      setInputValue('');
+      setShowInput(false);
     }
   };
 
-  const handleReset = () => {
-    setInputValue('');
-    onResetToDefault();
-  };
-
   const defaultMinutes = Math.floor(defaultTime / 60);
-  const defaultSeconds = defaultTime % 60;
 
   return (
-    <div className="flex items-center justify-center space-x-4 mt-6 mb-6">
-      <div className="flex items-center space-x-2 bg-mediterranean-cream/60 rounded-full px-4 py-2 border border-olive-grove/20">
-        <Clock className="text-volcanic-stone/60" size={16} />
-        <Input
-          type="number"
-          placeholder={`${defaultMinutes} min`}
-          value={inputValue}
-          onChange={handleInputChange}
-          disabled={isRunning}
-          min="0.5"
-          max="60"
-          step="0.5"
-          className="w-20 h-8 text-center border-none bg-transparent focus:ring-0 focus:outline-none text-volcanic-stone font-medium"
-        />
-        <span className="text-xs text-volcanic-stone/60 font-playfair">min</span>
-      </div>
-
+    <div className="flex flex-col items-center gap-3 mt-4">
+      {!showInput ? (
+        <div className="flex gap-2">
+          <button
+            onClick={() => setShowInput(true)}
+            disabled={isRunning}
+            className="flex items-center gap-2 bg-white/80 backdrop-blur-sm text-volcanic-stone px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 hover:bg-white disabled:opacity-50 disabled:cursor-not-allowed shadow-md"
+          >
+            <Clock size={14} />
+            Custom Time
+          </button>
+          
+          {hasCustomTime && (
+            <button
+              onClick={onResetToDefault}
+              disabled={isRunning}
+              className="flex items-center gap-2 bg-white/80 backdrop-blur-sm text-volcanic-stone px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 hover:bg-white disabled:opacity-50 disabled:cursor-not-allowed shadow-md"
+            >
+              <RotateCcw size={14} />
+              Default ({defaultMinutes}m)
+            </button>
+          )}
+        </div>
+      ) : (
+        <form onSubmit={handleSubmit} className="flex gap-2 items-center">
+          <input
+            type="number"
+            min="1"
+            max="60"
+            value={inputValue}
+            onChange={(e) => setInputValue(e.target.value)}
+            placeholder="Minutes"
+            className="w-20 px-3 py-2 rounded-full text-center text-sm border border-gray-200 focus:outline-none focus:ring-2 focus:ring-lemon-sun"
+            autoFocus
+          />
+          <button
+            type="submit"
+            className="bg-lemon-sun text-white px-4 py-2 rounded-full text-sm font-medium hover:bg-terracotta-warm transition-colors shadow-md"
+          >
+            Set
+          </button>
+          <button
+            type="button"
+            onClick={() => {
+              setShowInput(false);
+              setInputValue('');
+            }}
+            className="bg-gray-300 text-volcanic-stone px-4 py-2 rounded-full text-sm font-medium hover:bg-gray-400 transition-colors shadow-md"
+          >
+            Cancel
+          </button>
+        </form>
+      )}
+      
       {hasCustomTime && (
-        <button
-          onClick={handleReset}
-          disabled={isRunning}
-          className="bg-olive-grove/20 hover:bg-olive-grove/30 text-volcanic-stone p-2 rounded-full transition-all duration-300 hover:scale-110 disabled:opacity-50 disabled:cursor-not-allowed"
-          title="Reset to default time"
-        >
-          <RotateCcw size={14} />
-        </button>
+        <p className="text-xs text-volcanic-stone/60 font-playfair italic">
+          Using custom timer
+        </p>
       )}
     </div>
   );

@@ -1,10 +1,9 @@
 
 import React from 'react';
-import PastaCard from './PastaCard';
 
 interface PastaType {
   name: string;
-  time: number; // in seconds
+  time: number;
   description: string;
   story: string;
   location: string;
@@ -25,101 +24,43 @@ const RecipeBook: React.FC<RecipeBookProps> = ({
   flippingIndex,
   isRunning
 }) => {
-  const currentIndex = pastaTypes.findIndex(p => p.name === selectedPasta.name);
-
-  const handlePrevious = () => {
-    if (isRunning) return;
-    const prevIndex = (currentIndex - 1 + pastaTypes.length) % pastaTypes.length;
-    onPastaSelect(pastaTypes[prevIndex], prevIndex);
-  };
-
-  const handleNext = () => {
-    if (isRunning) return;
-    const nextIndex = (currentIndex + 1) % pastaTypes.length;
-    onPastaSelect(pastaTypes[nextIndex], nextIndex);
-  };
-
   return (
-    <div className="relative">
-      {/* Recipe Book Container */}
-      <div className="relative w-full max-w-md mx-auto">
-        {/* Book spine and binding */}
-        <div className="absolute left-0 top-0 bottom-0 w-6 bg-gradient-to-r from-volcanic-stone to-volcanic-stone/80 rounded-l-lg shadow-inner"></div>
-        <div className="absolute left-1 top-4 bottom-4 w-0.5 bg-lemon-sun/30"></div>
-        <div className="absolute left-1 top-8 bottom-8 w-0.5 bg-terracotta-warm/20"></div>
-
-        {/* Current recipe page */}
-        <div className="ml-6 relative">
-          <PastaCard
-            pasta={selectedPasta}
-            isSelected={true}
-            onClick={() => {}}
-            isFlipping={flippingIndex === currentIndex}
-          />
-
-          {/* Page corner fold effect */}
-          <div className="absolute top-0 right-0 w-8 h-8 bg-gradient-to-bl from-white/80 to-transparent transform rotate-45 translate-x-2 -translate-y-2 rounded-sm shadow-sm"></div>
-        </div>
-
-        {/* Navigation arrows */}
-        <button
-          onClick={handlePrevious}
-          disabled={isRunning}
-          className="absolute left-8 top-1/2 -translate-y-1/2 bg-mediterranean-cream/80 hover:bg-mediterranean-cream border border-olive-grove/30 rounded-full p-3 shadow-lg transition-all duration-300 hover:scale-110 disabled:opacity-50 disabled:cursor-not-allowed"
-        >
-          <svg width="16" height="16" viewBox="0 0 24 24" className="text-volcanic-stone">
-            <path
-              d="M15 18l-6-6 6-6"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            />
-          </svg>
-        </button>
-
-        <button
-          onClick={handleNext}
-          disabled={isRunning}
-          className="absolute right-2 top-1/2 -translate-y-1/2 bg-mediterranean-cream/80 hover:bg-mediterranean-cream border border-olive-grove/30 rounded-full p-3 shadow-lg transition-all duration-300 hover:scale-110 disabled:opacity-50 disabled:cursor-not-allowed"
-        >
-          <svg width="16" height="16" viewBox="0 0 24 24" className="text-volcanic-stone">
-            <path
-              d="M9 18l6-6-6-6"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            />
-          </svg>
-        </button>
-      </div>
-
-      {/* Book title and page indicator */}
-      <div className="text-center mt-6">
-        <h3 className="text-lg font-bold text-volcanic-stone font-dancing mb-2">
-          the pasta collection
-        </h3>
-        <div className="flex items-center justify-center space-x-2">
-          {pastaTypes.map((_, index) => (
-            <div
-              key={index}
-              className={`w-2 h-2 rounded-full transition-all duration-300 ${
-                index === currentIndex
-                  ? 'bg-terracotta-warm shadow-lg'
-                  : 'bg-volcanic-stone/30'
-              }`}
-            />
-          ))}
-        </div>
-        <div className="text-sm text-volcanic-stone/60 mt-2 font-playfair italic">
-          page {currentIndex + 1} of {pastaTypes.length}
-        </div>
-        <div className="text-xs text-volcanic-stone/50 mt-2 font-playfair italic">
-          use arrow keys to flip pages
-        </div>
+    <div className="space-y-4">
+      <h3 className="text-2xl font-bold text-volcanic-stone mb-6 font-dancing text-center">
+        Recipe Collection
+      </h3>
+      <div className="grid gap-3 max-h-96 overflow-y-auto">
+        {pastaTypes.map((pasta, index) => (
+          <div
+            key={pasta.name}
+            className={`recipe-card p-4 rounded-lg cursor-pointer transition-all duration-300 border-2 ${
+              selectedPasta.name === pasta.name
+                ? 'border-lemon-sun bg-lemon-grove/20'
+                : 'border-gray-200 hover:border-amalfi-blue'
+            } ${flippingIndex === index ? 'flipping' : ''} ${
+              isRunning ? 'pointer-events-none opacity-60' : ''
+            }`}
+            onClick={() => !isRunning && onPastaSelect(pasta, index)}
+          >
+            <div className="flex justify-between items-start mb-2">
+              <h4 className="font-bold text-volcanic-stone capitalize font-dancing text-lg">
+                {pasta.name}
+              </h4>
+              <span className="text-sm text-volcanic-stone/70 font-mono">
+                {Math.floor(pasta.time / 60)}:{(pasta.time % 60).toString().padStart(2, '0')}
+              </span>
+            </div>
+            <p className="text-xs text-volcanic-stone/60 uppercase tracking-wide mb-1">
+              {pasta.location}
+            </p>
+            <p className="text-sm text-volcanic-stone/80 font-playfair italic leading-relaxed">
+              {pasta.description}
+            </p>
+            <p className="text-xs text-volcanic-stone/60 mt-2 font-playfair">
+              {pasta.story}
+            </p>
+          </div>
+        ))}
       </div>
     </div>
   );
