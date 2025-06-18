@@ -42,18 +42,16 @@ const RecipeBook: React.FC<RecipeBookProps> = ({
   return (
     <div className="relative">
       {/* Recipe Book Container */}
-      <div className="relative w-full max-w-md mx-auto perspective-1000">
+      <div className="relative w-full max-w-md mx-auto">
         {/* Book spine and binding */}
         <div className="absolute left-0 top-0 bottom-0 w-6 bg-gradient-to-r from-volcanic-stone to-volcanic-stone/80 rounded-l-lg shadow-inner z-10"></div>
         <div className="absolute left-1 top-4 bottom-4 w-0.5 bg-lemon-sun/30 z-10"></div>
         <div className="absolute left-1 top-8 bottom-8 w-0.5 bg-terracotta-warm/20 z-10"></div>
 
         {/* Book pages container */}
-        <div className="ml-6 relative preserve-3d">
+        <div className="ml-6 relative">
           {/* Current page */}
-          <div className={`relative transition-all duration-700 transform-style-preserve-3d ${
-            flippingIndex === currentIndex ? 'animate-page-flip' : ''
-          }`}>
+          <div className="relative">
             <PastaCard
               pasta={selectedPasta}
               isSelected={true}
